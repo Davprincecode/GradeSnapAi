@@ -34,15 +34,15 @@ class CreateCourse : Screen {
                 .fillMaxSize()
                 .padding(Spacing.md)
         ) {
-            Breadcrumb(
-                items = listOf(
-                    Route.Dashboard.title,
-                    Route.Courses.title,
-                    Route.CreateCourse.title
-                )
-            )
+//            Breadcrumb(
+//                items = listOf(
+//                    Route.Dashboard.title,
+//                    Route.Courses.title,
+//                    Route.CreateCourse.title
+//                )
+//            )
 
-            Spacer(Modifier.height(Spacing.sm))
+            Spacer(Modifier.height(Spacing.lg))
 
             Text(Route.CreateCourse.title, style = AppTypography.default.headlineMedium)
 

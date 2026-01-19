@@ -52,12 +52,6 @@ fun InputAndScanBox() {
                     label = { Text("Matric Number") },
                     modifier = Modifier.weight(1f)
                 )
-                IconButton(onClick = {
-                    // TODO: OCR scan for matric number
-                    // After scan: matric = scannedText
-                }) {
-                    Icon(Icons.Default.Search, contentDescription = "OCR")
-                }
 
                 IconButton(onClick = {
                     // TODO: Open camera for matric capture
@@ -74,14 +68,6 @@ fun InputAndScanBox() {
                     label = { Text("Script Text") },
                     modifier = Modifier.weight(1f)
                 )
-                IconButton(onClick = {
-                    // TODO: OCR scan handwritten script
-                    // After scan: scriptText = scannedText
-                    // Also calculate score automatically
-                    // score = calculatedScore
-                }) {
-                    Icon(Icons.Default.Search, contentDescription = "OCR")
-                }
                 IconButton(onClick = {
                     // TODO: Open camera for script capture
                 }) {

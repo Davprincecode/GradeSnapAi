@@ -39,31 +39,30 @@ class Courses : Screen {
                 .padding(Spacing.md)
                 .verticalScroll(rememberScrollState())
         ) {
-            Breadcrumb(items = listOf(Route.Dashboard.title, Route.Courses.title))
 
-            Spacer(Modifier.height(Spacing.sm))
+
+            Spacer(Modifier.height(Spacing.lg))
 
             SectionHeader(title = Route.Courses.title)
 
-            Text("test — yaba.pdf")
-            Text("Hello world dear")
+            Text("Grade student work with grade snap ai")
 
             Spacer(Modifier.height(Spacing.md))
 
             PrimaryButton(
-                text = "+ Create New Assignment",
+                text = "+ Create New Course",
                 onClick = {
-                    println("Button clicked!")
                     navigator?.push(CreateCourse())
                 }
             )
+            Spacer(Modifier.height(Spacing.sm))
 
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
                     .background(AppColors.Surface, RoundedCornerShape(Spacing.sm))
                     .border(Spacing.xxxs, AppColors.PrimaryDark, shape = RoundedCornerShape(Spacing.sm))
-                    .padding(Spacing.md)
+                    .padding(Spacing.sm)
             ) {
                 Column(
                     modifier = Modifier
@@ -89,7 +88,7 @@ class Courses : Screen {
                                     style = AppTypography.default.bodyMedium
                                 )
                                 Text(
-                                    text = "Graded: ${course.noOfStudentGraded}",
+                                    text = "Graded: ${course.noOfStudentGraded} Student",
                                     style = AppTypography.default.bodyMedium
                                 )
 
@@ -102,6 +101,9 @@ class Courses : Screen {
                     }
                 }
             }
+
+            Spacer(Modifier.height(Spacing.md))
+            Spacer(Modifier.height(Spacing.md))
         }
     }
 
