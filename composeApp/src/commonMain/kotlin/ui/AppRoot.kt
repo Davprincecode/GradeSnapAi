@@ -8,6 +8,9 @@ import ui.screens.Courses
 @Composable
 fun AppRoot(darkTheme: Boolean) {
     AppTheme(darkTheme = darkTheme) {
-        Navigator(Courses())
+//        Navigator(Courses())
+//        CameraScreen()
+//        Navigator(CameraScreen())
+
     }
 }

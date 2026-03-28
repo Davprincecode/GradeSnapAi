@@ -3,18 +3,18 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
-    alias(libs.plugins.androidApplication)
     alias(libs.plugins.composeMultiplatform)
+    alias(libs.plugins.androidApplication)
     alias(libs.plugins.composeCompiler)
 }
 
 kotlin {
     androidTarget {
         compilerOptions {
-            jvmTarget.set(JvmTarget.JVM_11)
+            jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_11)
         }
     }
-    
+
     listOf(
         iosArm64(),
         iosSimulatorArm64()
@@ -24,31 +24,58 @@ kotlin {
             isStatic = true
         }
     }
-    
+
     sourceSets {
-        androidMain.dependencies {
-            implementation(compose.preview)
-            implementation(libs.androidx.activity.compose)
-        }
-        commonMain.dependencies {
-            implementation(compose.runtime)
-            implementation(compose.foundation)
-            implementation(compose.material3)
-            implementation(compose.ui)
-            implementation(compose.components.resources)
-            implementation(compose.components.uiToolingPreview)
-            implementation(libs.androidx.lifecycle.viewmodelCompose)
-            implementation(libs.androidx.lifecycle.runtimeCompose)
+        val commonMain by getting {
+            dependencies {
+                implementation(compose.runtime)
+                implementation(compose.foundation)
+                implementation(compose.material3)
+                implementation(compose.ui)
+                implementation(compose.components.resources)
+                implementation(compose.components.uiToolingPreview)
+                implementation(libs.androidx.lifecycle.viewmodelCompose)
+                implementation(libs.androidx.lifecycle.runtimeCompose)
 
-            // Voyager navigation (add these!)
-            implementation("cafe.adriel.voyager:voyager-navigator:1.0.0")
-            implementation("cafe.adriel.voyager:voyager-transitions:1.0.0")
-            implementation("cafe.adriel.voyager:voyager-tab-navigator:1.0.0")
-            implementation(compose.materialIconsExtended)
-
+                // Voyager navigation
+                implementation("cafe.adriel.voyager:voyager-navigator:1.0.0")
+                implementation("cafe.adriel.voyager:voyager-transitions:1.0.0")
+                implementation("cafe.adriel.voyager:voyager-tab-navigator:1.0.0")
+                implementation(compose.materialIconsExtended)
+            }
         }
-        commonTest.dependencies {
-            implementation(libs.kotlin.test)
+        val commonTest by getting {
+            dependencies {
+                implementation(libs.kotlin.test)
+            }
+        }
+        val androidMain by getting {
+            dependencies {
+                implementation(compose.preview)
+                implementation(libs.androidx.activity.compose)
+
+                implementation("com.google.mlkit:text-recognition:16.0.0")
+
+                // CameraX
+                implementation("androidx.camera:camera-core:1.3.2")
+                implementation("androidx.camera:camera-camera2:1.3.2")
+                implementation("androidx.camera:camera-lifecycle:1.3.2")
+                implementation("androidx.camera:camera-view:1.3.2")
+
+                // lifecycle +
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.8.0")
+                implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.8.0")
+            }
+        }
+        val iosMain by creating {
+            dependsOn(commonMain)
+        }
+        val iosArm64Main by getting {
+            dependsOn(iosMain)
+        }
+        val iosSimulatorArm64Main by getting {
+            dependsOn(iosMain)
         }
     }
 }
@@ -63,15 +90,11 @@ android {
         targetSdk = libs.versions.android.targetSdk.get().toInt()
         versionCode = 1
         versionName = "1.0"
+//        minSdk = libs.versions.android.minSdk.get().toInt()
     }
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
-        }
-    }
-    buildTypes {
-        getByName("release") {
-            isMinifyEnabled = false
         }
     }
     compileOptions {
@@ -83,4 +106,3 @@ android {
 dependencies {
     debugImplementation(compose.uiTooling)
 }
-
